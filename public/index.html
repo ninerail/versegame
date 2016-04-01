@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html ng-app = "versinator">
+  <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.6/yeti/bootstrap.min.css" rel="stylesheet">
+<head>
+	<title></title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+	<script src="js/app.js"></script>
+</head>
+<body>
+	<h1>Welcome to the Versinator!</h1>
+	<h2>Lookup a verse</h2>
+	<div ng-controller="VerseController">
+		<form novalidate class="simple-form">
+			<input type="text" placeholder="Book" ng-model="verse.book"></input>
+			<input type="text" placeholder="Chapter" ng-model="verse.chapter"></input>
+			<input type="text" placeholder="Verse" ng-model="verse.verse"></input>
+			<button ng-click="lookup(verse)">Submit</button>
+		</form>
+		<p>{{verse.book}} {{verse.chapter}} {{verse.verse}}</p>
+		<p>{{response.data}}</p>
+	</div>
+</body>
+</html>
