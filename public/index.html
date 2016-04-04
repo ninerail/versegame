@@ -4,20 +4,59 @@
 <head>
 	<title></title>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	<script src="js/app.js"></script>
+	<script src="js/bible.js"></script>
 </head>
-<body>
-	<h1>Welcome to the Versinator!</h1>
-	<h2>Lookup a verse</h2>
-	<div ng-controller="VerseController">
-		<form novalidate class="simple-form">
-			<input type="text" placeholder="Book" ng-model="verse.book"></input>
-			<input type="text" placeholder="Chapter" ng-model="verse.chapter"></input>
-			<input type="text" placeholder="Verse" ng-model="verse.verse"></input>
-			<button ng-click="lookup(verse)">Submit</button>
-		</form>
-		<p>{{verse.book}} {{verse.chapter}} {{verse.verse}}</p>
-		<p>{{response.data}}</p>
+<body ng-controller="VerseController as ctrl">
+	
+<!-- New game display -->
+	<div class="jumbotron" ng-if="ctrl.newgame" >
+		<h1>Versinator</h1>
+		<p>We give you a verse from somewhere in scripture. You tell us what book it came from. Think you can handle it, Poindexter?</p>		
+		<a ng-click="question()" class="btn btn-primary btn-lg">Play now</a>
 	</div>
+
+<!-- Question display -->
+	<div id = gamequestion >
+		<h3>{{ctrl.text}}</h3><br/>
+	</div>
+
+<!-- Answer buttons	 -->
+	<div id = answerbuttons ng-if="!ctrl.newgame">
+		<a ng-click="evaluate(ctrl.options[0])" class="btn btn-primary" data-toggle="modal" data-target="#myModal">{{ctrl.options[0]}}</a>
+		<a ng-click="evaluate(ctrl.options[1])" class="btn btn-success" data-toggle="modal" data-target="#myModal">{{ctrl.options[1]}}</a>
+		<a ng-click="evaluate(ctrl.options[2])" class="btn btn-info" data-toggle="modal" data-target="#myModal">{{ctrl.options[2]}}</a>
+		<a ng-click="evaluate(ctrl.options[3])" class="btn btn-warning" data-toggle="modal" data-target="#myModal">{{ctrl.options[3]}}</a>
+		<a ng-click="evaluate(ctrl.options[4])"class="btn btn-danger" data-toggle="modal" data-target="#myModal">{{ctrl.options[4]}}</a>
+		<a ng-click="evaluate(ctrl.options[5])" class="btn btn-primary"data-toggle="modal" data-target="#myModal">{{ctrl.options[5]}}</a>
+	</div>
+
+	<!-- Answer display -->
+	<div class="container">
+
+  	<!-- Modal -->
+  	<div class="modal fade" id="myModal" role="dialog">
+    	<div class="modal-dialog">
+    
+      	<!-- Modal content-->
+      	<div class="modal-content">
+        	<div class="modal-header">
+          	<button type="button" class="close" data-dismiss="modal">&times;</button>
+          	<h4 class="modal-title">{{ctrl.answer}}</h4>
+        	</div>
+        	<div class="modal-body">
+        		<h2>{{ctrl.answerVerse}}</h2>
+          	<p>{{ctrl.text}}</p>
+        	</div>
+        	<div class="modal-footer">
+          	<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="question()">Next Question</button>
+        	</div>
+      	</div>   
+    	</div>
+  	</div>
+	</div>
+
 </body>
 </html>
