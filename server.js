@@ -59,9 +59,9 @@ app.get('/bible/:book/:chapter/:verse', function (req, res) {
 	});
 });
 
-//Controllers
-var versesController = require('./controllers/verses.js')
-app.use('/verses', versesController);
+// //Controllers
+// var versesController = require('./controllers/verses.js')
+// app.use('/verses', versesController);
 
 //listen on localhost:3000
 app.listen(3000, function(){
