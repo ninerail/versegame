@@ -8,7 +8,7 @@ app.controller('VerseController', ['$http', '$scope', function($http, $scope) {
 
 	// GET A RANDOM BOOK AFTER A SHORT DELAY
 		setTimeout(function(){
-			console.log("DELAY OVER")			
+					
 		},1000);
 
 	$scope.question = function() {
