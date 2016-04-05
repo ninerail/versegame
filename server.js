@@ -2,10 +2,34 @@
 var express = require('express');
 var app = express();
 var request = require('request');
+var mongoose = require('mongoose');
+var passport = require('passport');
+var bodyParser = require('body-parser');
+var methodOverride = require('method-override');
+var expressSession = require('express-session');
 
-//Middlewear
-//Names public file
+require('./config/passport.js')(passport);
+
+//Create mongodb database
+var mongoUri = process.env.MONGOLAB_URI || 'mongodb://localhost:27017/bible';
+mongoose.connect(mongoUri);
+
+// MIDDLEWARE
 app.use(express.static('public'));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(methodOverride('_method'));
+
+// PASSPORT STUFF
+app.use(expressSession({ name: 'whut', secret: 'conventional wisdom', saveUninitialized: true, resave: true, proxy: true }))
+app.use(passport.initialize());
+app.use(passport.session());
+
+// CONTROLLERS
+var usersController = require('./controllers/usersController');
+app.use('/users', usersController);
+
+
 
 //THIS TAKES VERSE REQUEST FROM APP.JS, SENDS IT TO THE SITE, THEN RETURNS IT TO APP.JS
 
@@ -59,9 +83,6 @@ app.get('/bible/:book/:chapter/:verse', function (req, res) {
 	});
 });
 
-// //Controllers
-// var versesController = require('./controllers/verses.js')
-// app.use('/verses', versesController);
 
 //listen on localhost:3000
 app.listen(3000, function(){
